@@ -8,10 +8,17 @@
   <script src="/_sdk/element_sdk.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
   <style>
-    body { box-sizing: border-box; }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     :root {
       --primary-blue: #00d4ff;
@@ -26,8 +33,13 @@
       overflow-x: hidden;
     }
 
-    .font-orbitron { font-family: 'Orbitron', sans-serif; }
-    .font-inter { font-family: 'Inter', sans-serif; }
+    .font-orbitron {
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .font-inter {
+      font-family: 'Inter', sans-serif;
+    }
 
     .hero-bg {
       background: linear-gradient(135deg, #0a1628 0%, #0d1f35 50%, #0a1628 100%);
@@ -37,17 +49,20 @@
 
     .grid-overlay {
       position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(0,212,255,.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,212,255,.03) 1px, transparent 1px);
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
       background-size: 50px 50px;
       animation: gridMove 20s linear infinite;
     }
 
     @keyframes gridMove {
-      0% { transform: translate(0,0); }
-      100% { transform: translate(50px,50px); }
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, 50px); }
     }
 
     .particle {
@@ -58,94 +73,479 @@
       border-radius: 50%;
       box-shadow: 0 0 10px var(--primary-blue), 0 0 20px var(--primary-blue);
       animation: float 15s infinite ease-in-out;
-      opacity: .6;
+      opacity: 0.6;
     }
 
     @keyframes float {
-      0%,100% { transform: translate(0,0); opacity:.6; }
-      25% { transform: translate(-50px,-100px); opacity:.8; }
-      50% { transform: translate(30px,-50px); opacity:.4; }
-      75% { transform: translate(-20px,-150px); opacity:.7; }
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0.6; }
+      25% { transform: translateY(-100px) translateX(50px); opacity: 0.8; }
+      50% { transform: translateY(-50px) translateX(-30px); opacity: 0.4; }
+      75% { transform: translateY(-150px) translateX(20px); opacity: 0.7; }
+    }
+
+    .light-line {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--primary-blue), transparent);
+      animation: lightMove 8s infinite;
+      opacity: 0.5;
+    }
+
+    @keyframes lightMove {
+      0% { transform: translateX(-100%); opacity: 0; }
+      50% { opacity: 0.5; }
+      100% { transform: translateX(200%); opacity: 0; }
+    }
+
+    .card-3d {
+      transform-style: preserve-3d;
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .card-3d:hover {
+      transform: translateY(-10px) rotateX(5deg);
+      box-shadow: 0 25px 50px rgba(0, 212, 255, 0.3);
     }
 
     .glow-text {
-      text-shadow: 0 0 10px var(--primary-blue), 0 0 20px var(--primary-blue);
+      text-shadow: 0 0 10px var(--primary-blue), 0 0 20px var(--primary-blue), 0 0 40px var(--primary-blue);
+    }
+
+    .btn-glow {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .btn-glow::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: btnShine 3s infinite;
+    }
+
+    @keyframes btnShine {
+      0% { left: -100%; }
+      50%, 100% { left: 100%; }
     }
 
     .btn-glow:hover {
-      box-shadow: 0 0 30px var(--primary-blue);
+      box-shadow: 0 0 30px var(--primary-blue), 0 0 60px rgba(0, 212, 255, 0.3);
       transform: scale(1.05);
     }
 
-    .glass-header {
-      background: rgba(10,22,40,.8);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(0,212,255,.1);
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 1s forwards;
     }
 
-    html { scroll-behavior: smooth; }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+    .delay-4 { animation-delay: 0.8s; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .glass-header {
+      background: rgba(10, 22, 40, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+    }
+
+    .number-circle {
+      background: linear-gradient(135deg, var(--primary-blue), var(--glow-blue));
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+    }
+
+    .cta-section {
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(30, 58, 95, 0.3) 100%);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+    }
+
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .mobile-menu.active {
+      transform: translateX(0);
+    }
   </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
-
  <body class="h-full font-inter text-white bg-[#0a1628]">
-  <div id="app-wrapper" class="w-full h-full overflow-auto">
-
-<!-- HERO -->
-<section id="inicio" class="hero-bg min-h-screen flex items-center justify-center pt-20">
-  <div class="grid-overlay"></div>
-
-  <div class="relative z-10 max-w-5xl mx-auto text-center px-6">
-    <h1 class="font-orbitron text-7xl font-black text-[#00d4ff] glow-text mb-6">
-      Next Lab
-    </h1>
-
-    <h2 class="font-orbitron text-2xl text-gray-300 mb-8">
-      Agência de tecnologia para seu negócio
-    </h2>
-
-    <p class="text-gray-400 text-xl max-w-3xl mx-auto mb-10">
-      Nós não criamos apenas sites e agentes de IA — nós criamos sistemas de crescimento.
-    </p>
-
-    <!-- CTA HERO (CORRIGIDO) -->
-    <a
-      id="hero-cta"
-      href="https://wa.me/5571981984004?text=Ol%C3%A1!%20Conheci%20a%20Next%20Lab%20pelo%20site%20e%20gostaria%20de%20conversar%20melhor"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="btn-glow inline-flex items-center px-8 py-4 bg-gradient-to-r from-[#00d4ff] to-[#0077b6] text-white font-bold text-lg rounded-full shadow-lg">
-      <span id="hero-cta-text">Contrate nossos serviços</span>
-    </a>
+  <div id="app-wrapper" class="w-full h-full overflow-auto"><!-- Header -->
+   <header class="fixed top-0 left-0 right-0 z-50 glass-header">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex items-center justify-between h-16 sm:h-20"><!-- Logo --> <a href="#inicio" class="flex items-center space-x-2">
+       <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-[#00d4ff] to-[#0077b6] flex items-center justify-center">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+       </div><span id="logo-text" class="font-orbitron text-xl sm:text-2xl font-bold text-[#00d4ff] glow-text">Next Lab</span> </a> <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center space-x-8"><a href="#inicio" class="text-gray-300 hover:text-[#00d4ff] transition-colors duration-300 font-medium">Início</a> <a href="#sobre" class="text-gray-300 hover:text-[#00d4ff] transition-colors duration-300 font-medium">Sobre</a> <a href="#processo" class="text-gray-300 hover:text-[#00d4ff] transition-colors duration-300 font-medium">Processo</a> <a href="#contato" class="text-gray-300 hover:text-[#00d4ff] transition-colors duration-300 font-medium">Contato</a>
+      </nav><!-- Mobile Menu Button --> <button id="menu-toggle" class="md:hidden p-2 text-[#00d4ff]">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+       </svg></button>
+     </div>
+    </div><!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 w-64 h-full bg-[#0a1628] border-l border-[#00d4ff]/20 md:hidden">
+     <div class="p-6"><button id="menu-close" class="absolute top-4 right-4 text-[#00d4ff]">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+       </svg></button>
+      <nav class="flex flex-col space-y-6 mt-12"><a href="#inicio" class="text-gray-300 hover:text-[#00d4ff] transition-colors duration-300 font-medium text-lg">Início</a> <a href="#sobre" class="text-gray-300 hover:text-[#00d4ff] transition-colors duration-300 font-medium text-lg">Sobre</a> <a href="#processo" class="text-gray-300 hover:text-[#00d4ff] transition-colors duration-300 font-medium text-lg">Processo</a> <a href="#contato" class="text-gray-300 hover:text-[#00d4ff] transition-colors duration-300 font-medium text-lg">Contato</a>
+      </nav>
+     </div>
+    </div>
+   </header><!-- Hero Section -->
+   <section id="inicio" class="hero-bg min-h-screen flex items-center justify-center relative pt-20">
+    <div class="grid-overlay"></div>
+    <div class="particle" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+    <div class="particle" style="top: 40%; left: 80%; animation-delay: 2s;"></div>
+    <div class="particle" style="top: 60%; left: 20%; animation-delay: 4s;"></div>
+    <div class="particle" style="top: 30%; left: 60%; animation-delay: 1s;"></div>
+    <div class="particle" style="top: 70%; left: 70%; animation-delay: 3s;"></div>
+    <div class="particle" style="top: 80%; left: 30%; animation-delay: 5s;"></div>
+    <div class="particle" style="top: 15%; left: 50%; animation-delay: 2.5s;"></div>
+    <div class="particle" style="top: 55%; left: 90%; animation-delay: 1.5s;"></div>
+    <div class="light-line" style="top: 30%; width: 200px; animation-delay: 0s;"></div>
+    <div class="light-line" style="top: 50%; width: 300px; animation-delay: 3s;"></div>
+    <div class="light-line" style="top: 70%; width: 250px; animation-delay: 6s;"></div>
+    <div class="absolute top-1/4 right-10 w-32 h-32 sm:w-48 sm:h-48 opacity-20">
+     <svg viewbox="0 0 200 200" class="w-full h-full animate-spin" style="animation-duration: 30s;"><polygon points="100,10 190,60 190,140 100,190 10,140 10,60" fill="none" stroke="#00d4ff" stroke-width="1" /> <polygon points="100,30 170,70 170,130 100,170 30,130 30,70" fill="none" stroke="#00d4ff" stroke-width="0.5" />
+     </svg>
+    </div>
+    <div class="absolute bottom-1/4 left-10 w-24 h-24 sm:w-36 sm:h-36 opacity-20">
+     <svg viewbox="0 0 100 100" class="w-full h-full animate-pulse"><circle cx="50" cy="50" r="45" fill="none" stroke="#00d4ff" stroke-width="0.5" /> <circle cx="50" cy="50" r="35" fill="none" stroke="#00d4ff" stroke-width="0.5" /> <circle cx="50" cy="50" r="25" fill="none" stroke="#00d4ff" stroke-width="0.5" />
+     </svg>
+    </div>
+    <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+     <h1 id="hero-title" class="font-orbitron text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-[#00d4ff] glow-text mb-4 fade-in">Next Lab</h1>
+     <h2 id="hero-subtitle" class="font-orbitron text-xl sm:text-2xl md:text-3xl text-gray-300 mb-8 fade-in delay-1">Agência de tecnologia para seu negócio</h2>
+     <p id="hero-description" class="text-gray-400 text-base sm:text-lg md:text-xl max-w-3xl mx-auto mb-10 leading-relaxed fade-in delay-2">Nós não criamos apenas sites e agentes de IA — nós criamos sistemas de crescimento. A maioria das agências para no design. Nós vamos mais fundo — com automação, funis de vendas e estratégias baseadas em dados que preenchem sua agenda com clientes qualificados.</p><a id="hero-cta" href="https://wa.me/?text=Ol%C3%A1!%20Conheci%20a%20Next%20Lab%20pelo%20site%20e%20gostaria%20de%20conversar%20melhor" target="_blank" rel="noopener noreferrer" class="btn-glow inline-flex items-center px-8 py-4 bg-gradient-to-r from-[#00d4ff] to-[#0077b6] text-white font-bold text-lg rounded-full shadow-lg fade-in delay-3"> <span id="hero-cta-text">Contrate nossos serviços</span>
+      <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      </svg></a>
+     <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <svg class="w-6 h-6 text-[#00d4ff]" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
+     </div>
+    </div>
+   </section><!-- Sobre Section -->
+   <section id="sobre" class="py-20 sm:py-32 bg-gradient-to-b from-[#0a1628] to-[#0d1f35] relative">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+     <h2 class="font-orbitron text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-8">Por que a <span id="about-title" class="text-[#00d4ff] glow-text">Next Lab</span>?</h2>
+     <div class="w-24 h-1 bg-gradient-to-r from-transparent via-[#00d4ff] to-transparent mx-auto mb-10"></div>
+     <p id="about-description" class="text-gray-400 text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed">Somos uma agência focada em resultados reais. Enquanto outras empresas entregam apenas um site bonito, nós construímos <span class="text-[#00d4ff] font-semibold">ecossistemas digitais completos</span> que trabalham 24/7 para atrair, converter e fidelizar seus clientes. Combinamos <span class="text-[#00d4ff] font-semibold">inteligência artificial</span>, <span class="text-[#00d4ff] font-semibold">automação</span> e <span class="text-[#00d4ff] font-semibold">design de alta conversão</span> para transformar seu negócio em uma máquina de crescimento.</p>
+     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
+      <div class="p-6 rounded-2xl bg-[#0a1628]/50 border border-[#00d4ff]/10 hover:border-[#00d4ff]/30 transition-all duration-300">
+       <div class="w-14 h-14 mx-auto mb-4 rounded-xl bg-gradient-to-br from-[#00d4ff]/20 to-transparent flex items-center justify-center">
+        <svg class="w-7 h-7 text-[#00d4ff]" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+       </div>
+       <h3 class="font-orbitron text-white font-semibold mb-2">Sites de Alta Conversão</h3>
+       <p class="text-gray-500 text-sm">Design estratégico focado em resultados</p>
+      </div>
+      <div class="p-6 rounded-2xl bg-[#0a1628]/50 border border-[#00d4ff]/10 hover:border-[#00d4ff]/30 transition-all duration-300">
+       <div class="w-14 h-14 mx-auto mb-4 rounded-xl bg-gradient-to-br from-[#00d4ff]/20 to-transparent flex items-center justify-center">
+        <svg class="w-7 h-7 text-[#00d4ff]" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+        </svg>
+       </div>
+       <h3 class="font-orbitron text-white font-semibold mb-2">Agentes de IA</h3>
+       <p class="text-gray-500 text-sm">Automação inteligente 24 horas</p>
+      </div>
+      <div class="p-6 rounded-2xl bg-[#0a1628]/50 border border-[#00d4ff]/10 hover:border-[#00d4ff]/30 transition-all duration-300">
+       <div class="w-14 h-14 mx-auto mb-4 rounded-xl bg-gradient-to-br from-[#00d4ff]/20 to-transparent flex items-center justify-center">
+        <svg class="w-7 h-7 text-[#00d4ff]" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+        </svg>
+       </div>
+       <h3 class="font-orbitron text-white font-semibold mb-2">Funis de Vendas</h3>
+       <p class="text-gray-500 text-sm">Estratégias que convertem visitantes</p>
+      </div>
+      <div class="p-6 rounded-2xl bg-[#0a1628]/50 border border-[#00d4ff]/10 hover:border-[#00d4ff]/30 transition-all duration-300">
+       <div class="w-14 h-14 mx-auto mb-4 rounded-xl bg-gradient-to-br from-[#00d4ff]/20 to-transparent flex items-center justify-center">
+        <svg class="w-7 h-7 text-[#00d4ff]" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+       </div>
+       <h3 class="font-orbitron text-white font-semibold mb-2">Análise de Dados</h3>
+       <p class="text-gray-500 text-sm">Decisões baseadas em métricas</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Processo Section -->
+   <section id="processo" class="py-20 sm:py-32 bg-[#0d1f35] relative overflow-hidden">
+    <div class="absolute inset-0 opacity-5">
+     <div class="absolute top-0 left-0 w-full h-full" style="background-image: radial-gradient(circle at 20% 80%, #00d4ff 0%, transparent 50%), radial-gradient(circle at 80% 20%, #00d4ff 0%, transparent 50%);"></div>
+    </div>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+     <div class="text-center mb-16">
+      <h2 class="font-orbitron text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4"><span class="text-[#00d4ff] glow-text">Processo</span></h2>
+      <p class="text-gray-400 text-lg max-w-2xl mx-auto">Em apenas 3 etapas simples, transformamos sua presença digital</p>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="card-3d bg-gradient-to-br from-[#0a1628] to-[#1e3a5f]/30 rounded-3xl p-8 border border-[#00d4ff]/20 relative">
+       <div class="number-circle w-16 h-16 rounded-full flex items-center justify-center text-white font-orbitron text-2xl font-bold mb-6">
+        1
+       </div>
+       <h3 id="process-step1-title" class="font-orbitron text-xl sm:text-2xl font-bold text-white mb-4">Chamada de Demonstração</h3>
+       <p id="process-step1-desc" class="text-gray-400 mb-4">Em uma conversa de <span class="text-[#00d4ff] font-semibold">30 minutos</span>, entendemos seu negócio, seus objetivos e mapeamos as melhores estratégias para o seu crescimento.</p>
+       <div class="flex items-center text-[#00d4ff] text-sm">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg> 30 minutos
+       </div>
+      </div>
+      <div class="card-3d bg-gradient-to-br from-[#0a1628] to-[#1e3a5f]/30 rounded-3xl p-8 border border-[#00d4ff]/20 relative">
+       <div class="number-circle w-16 h-16 rounded-full flex items-center justify-center text-white font-orbitron text-2xl font-bold mb-6">
+        2
+       </div>
+       <h3 id="process-step2-title" class="font-orbitron text-xl sm:text-2xl font-bold text-white mb-4">Construção do Sistema</h3>
+       <p id="process-step2-desc" class="text-gray-400 mb-4">Nossa equipe trabalha intensamente por <span class="text-[#00d4ff] font-semibold">7 a 10 dias</span> para criar seu site, configurar automações e implementar todas as estratégias planejadas.</p>
+       <div class="flex items-center text-[#00d4ff] text-sm">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg> 7 a 10 dias
+       </div>
+      </div>
+      <div class="card-3d bg-gradient-to-br from-[#0a1628] to-[#1e3a5f]/30 rounded-3xl p-8 border border-[#00d4ff]/20 relative">
+       <div class="number-circle w-16 h-16 rounded-full flex items-center justify-center text-white font-orbitron text-2xl font-bold mb-6">
+        3
+       </div>
+       <h3 id="process-step3-title" class="font-orbitron text-xl sm:text-2xl font-bold text-white mb-4">Chamada de Lançamento</h3>
+       <p id="process-step3-desc" class="text-gray-400 mb-4">Em <span class="text-[#00d4ff] font-semibold">20 minutos</span>, apresentamos todo o sistema, ensinamos como usar e garantimos que você está pronto para decolar.</p>
+       <div class="flex items-center text-[#00d4ff] text-sm">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+        </svg> 20 minutos
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- CTA Section -->
+   <section id="contato" class="py-20 sm:py-32 bg-[#0a1628] relative">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="cta-section rounded-3xl p-8 sm:p-12 md:p-16 text-center relative overflow-hidden">
+      <div class="absolute inset-0 opacity-30">
+       <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#00d4ff] rounded-full blur-[150px]"></div>
+      </div>
+      <div class="relative z-10">
+       <h2 id="cta-title" class="font-orbitron text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">Pronto para <span class="text-[#00d4ff] glow-text">Transformar</span> seu Negócio?</h2>
+       <p id="cta-description" class="text-gray-400 text-lg sm:text-xl mb-10 max-w-2xl mx-auto">Agende uma chamada gratuita e descubra como podemos ajudar você a alcançar resultados extraordinários.</p><a id="cta-final" href="https://wa.me/?text=Ol%C3%A1!%20Conheci%20a%20Next%20Lab%20pelo%20site%20e%20gostaria%20de%20conversar%20melhor" target="_blank" rel="noopener noreferrer" class="btn-glow inline-flex items-center px-10 py-5 bg-gradient-to-r from-[#00d4ff] to-[#0077b6] text-white font-bold text-lg rounded-full shadow-lg">
+        <svg class="w-6 h-6 mr-3" fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg><span id="cta-button-text">Falar no WhatsApp</span> </a>
+      </div>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="py-8 bg-[#070d18] border-t border-[#00d4ff]/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+     <p id="footer-text" class="text-gray-500 text-sm">© 2026 Next Lab — Todos os direitos reservados</p>
+    </div>
+   </footer>
   </div>
-</section>
+  <script>
+    const defaultConfig = {
+      hero_title: 'Next Lab',
+      hero_subtitle: 'Agência de tecnologia para seu negócio',
+      hero_description: 'Nós não criamos apenas sites e agentes de IA — nós criamos sistemas de crescimento. A maioria das agências para no design. Nós vamos mais fundo — com automação, funis de vendas e estratégias baseadas em dados que preenchem sua agenda com clientes qualificados.',
+      about_title: 'Next Lab',
+      about_description: 'Somos uma agência focada em resultados reais. Enquanto outras empresas entregam apenas um site bonito, nós construímos ecossistemas digitais completos que trabalham 24/7 para atrair, converter e fidelizar seus clientes. Combinamos inteligência artificial, automação e design de alta conversão para transformar seu negócio em uma máquina de crescimento.',
+      process_title: 'Nosso Processo',
+      process_step1_title: 'Chamada de Demonstração',
+      process_step1_desc: 'Em uma conversa de 30 minutos, entendemos seu negócio, seus objetivos e mapeamos as melhores estratégias para o seu crescimento.',
+      process_step2_title: 'Construção do Sistema',
+      process_step2_desc: 'Nossa equipe trabalha intensamente por 7 a 10 dias para criar seu site, configurar automações e implementar todas as estratégias planejadas.',
+      process_step3_title: 'Chamada de Lançamento',
+      process_step3_desc: 'Em 20 minutos, apresentamos todo o sistema, ensinamos como usar e garantimos que você está pronto para decolar.',
+      cta_title: 'Pronto para Transformar seu Negócio?',
+      cta_description: 'Agende uma chamada gratuita e descubra como podemos ajudar você a alcançar resultados extraordinários.',
+      cta_button_text: 'Falar no WhatsApp',
+      footer_text: '© 2026 Next Lab — Todos os direitos reservados',
+      primary_color: '#00d4ff',
+      background_color: '#0a1628',
+      text_color: '#ffffff',
+      secondary_color: '#1e3a5f',
+      accent_color: '#0077b6',
+      font_family: 'Orbitron',
+      font_size: 16
+    };
 
-<!-- CTA FINAL -->
-<section id="contato" class="py-32 bg-[#0a1628] text-center">
-  <h2 class="font-orbitron text-4xl mb-6">
-    Pronto para <span class="text-[#00d4ff] glow-text">transformar</span> seu negócio?
-  </h2>
+    let config = { ...defaultConfig };
 
-  <p class="text-gray-400 text-xl mb-10">
-    Agende uma conversa gratuita agora mesmo.
-  </p>
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuClose = document.getElementById('menu-close');
+    const mobileMenu = document.getElementById('mobile-menu');
 
-  <!-- CTA FINAL (CORRIGIDO) -->
-  <a
-    id="cta-final"
-    href="https://wa.me/5571981984004?text=Ol%C3%A1!%20Conheci%20a%20Next%20Lab%20pelo%20site%20e%20gostaria%20de%20conversar%20melhor"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="btn-glow inline-flex items-center px-10 py-5 bg-gradient-to-r from-[#00d4ff] to-[#0077b6] text-white font-bold text-lg rounded-full shadow-lg">
-    <span id="cta-button-text">Fale no WhatsApp</span>
-  </a>
-</section>
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.add('active');
+    });
 
-<footer class="py-8 bg-[#070d18] text-center">
-  <p class="text-gray-500 text-sm">
-    © 2026 Next Lab — Todos os direitos reservados
-  </p>
-</footer>
+    menuClose.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+    });
 
-  </div>
- </body>
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+      });
+    });
+
+    async function onConfigChange(cfg) {
+      config = { ...defaultConfig, ...cfg };
+      
+      document.getElementById('hero-title').textContent = config.hero_title || defaultConfig.hero_title;
+      document.getElementById('hero-subtitle').textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
+      document.getElementById('hero-description').textContent = config.hero_description || defaultConfig.hero_description;
+      document.getElementById('logo-text').textContent = config.hero_title || defaultConfig.hero_title;
+      
+      document.getElementById('about-title').textContent = config.about_title || defaultConfig.about_title;
+      document.getElementById('about-description').textContent = config.about_description || defaultConfig.about_description;
+      
+      document.getElementById('process-step1-title').textContent = config.process_step1_title || defaultConfig.process_step1_title;
+      document.getElementById('process-step1-desc').textContent = config.process_step1_desc || defaultConfig.process_step1_desc;
+      document.getElementById('process-step2-title').textContent = config.process_step2_title || defaultConfig.process_step2_title;
+      document.getElementById('process-step2-desc').textContent = config.process_step2_desc || defaultConfig.process_step2_desc;
+      document.getElementById('process-step3-title').textContent = config.process_step3_title || defaultConfig.process_step3_title;
+      document.getElementById('process-step3-desc').textContent = config.process_step3_desc || defaultConfig.process_step3_desc;
+      
+      document.getElementById('cta-title').textContent = config.cta_title || defaultConfig.cta_title;
+      document.getElementById('cta-description').textContent = config.cta_description || defaultConfig.cta_description;
+      document.getElementById('cta-button-text').textContent = config.cta_button_text || defaultConfig.cta_button_text;
+      
+      document.getElementById('footer-text').textContent = config.footer_text || defaultConfig.footer_text;
+      
+      const primaryColor = config.primary_color || defaultConfig.primary_color;
+      const bgColor = config.background_color || defaultConfig.background_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      
+      document.documentElement.style.setProperty('--primary-blue', primaryColor);
+      document.documentElement.style.setProperty('--dark-blue', bgColor);
+      
+      const fontFamily = config.font_family || defaultConfig.font_family;
+      const baseFontStack = 'Arial, sans-serif';
+      document.querySelectorAll('.font-orbitron').forEach(el => {
+        el.style.fontFamily = `${fontFamily}, ${baseFontStack}`;
+      });
+      
+      const baseSize = config.font_size || defaultConfig.font_size;
+      document.body.style.fontSize = `${baseSize}px`;
+    }
+
+    function mapToCapabilities(cfg) {
+      return {
+        recolorables: [
+          {
+            get: () => cfg.background_color || defaultConfig.background_color,
+            set: (value) => {
+              cfg.background_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => cfg.secondary_color || defaultConfig.secondary_color,
+            set: (value) => {
+              cfg.secondary_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ secondary_color: value });
+            }
+          },
+          {
+            get: () => cfg.text_color || defaultConfig.text_color,
+            set: (value) => {
+              cfg.text_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => cfg.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              cfg.primary_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => cfg.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              cfg.accent_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ accent_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => cfg.font_family || defaultConfig.font_family,
+          set: (value) => {
+            cfg.font_family = value;
+            if (window.elementSdk) window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: {
+          get: () => cfg.font_size || defaultConfig.font_size,
+          set: (value) => {
+            cfg.font_size = value;
+            if (window.elementSdk) window.elementSdk.setConfig({ font_size: value });
+          }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(cfg) {
+      return new Map([
+        ['hero_title', cfg.hero_title || defaultConfig.hero_title],
+        ['hero_subtitle', cfg.hero_subtitle || defaultConfig.hero_subtitle],
+        ['hero_description', cfg.hero_description || defaultConfig.hero_description],
+        ['about_title', cfg.about_title || defaultConfig.about_title],
+        ['about_description', cfg.about_description || defaultConfig.about_description],
+        ['process_title', cfg.process_title || defaultConfig.process_title],
+        ['process_step1_title', cfg.process_step1_title || defaultConfig.process_step1_title],
+        ['process_step1_desc', cfg.process_step1_desc || defaultConfig.process_step1_desc],
+        ['process_step2_title', cfg.process_step2_title || defaultConfig.process_step2_title],
+        ['process_step2_desc', cfg.process_step2_desc || defaultConfig.process_step2_desc],
+        ['process_step3_title', cfg.process_step3_title || defaultConfig.process_step3_title],
+        ['process_step3_desc', cfg.process_step3_desc || defaultConfig.process_step3_desc],
+        ['cta_title', cfg.cta_title || defaultConfig.cta_title],
+        ['cta_description', cfg.cta_description || defaultConfig.cta_description],
+        ['cta_button_text', cfg.cta_button_text || defaultConfig.cta_button_text],
+        ['footer_text', cfg.footer_text || defaultConfig.footer_text]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    } else {
+      onConfigChange(defaultConfig);
+    }
+
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('section').forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c9e0fbfe6e700df',t:'MTc3MDQxNjcwNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
