@@ -9,36 +9,142 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- TODO O CSS ORIGINAL MANTIDO -->
   <style>
-    /* (CSS exatamente igual ao que você enviou) */
-  </style>
+    body { box-sizing: border-box; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    :root {
+      --primary-blue: #00d4ff;
+      --dark-blue: #0a1628;
+      --accent-blue: #1e3a5f;
+      --glow-blue: #00a8cc;
+      --light-blue: #e0f7ff;
+    }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    .font-orbitron { font-family: 'Orbitron', sans-serif; }
+    .font-inter { font-family: 'Inter', sans-serif; }
+
+    .hero-bg {
+      background: linear-gradient(135deg, #0a1628 0%, #0d1f35 50%, #0a1628 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% { transform: translate(0,0); }
+      100% { transform: translate(50px,50px); }
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--primary-blue);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--primary-blue), 0 0 20px var(--primary-blue);
+      animation: float 15s infinite ease-in-out;
+      opacity: .6;
+    }
+
+    @keyframes float {
+      0%,100% { transform: translate(0,0); opacity:.6; }
+      25% { transform: translate(-50px,-100px); opacity:.8; }
+      50% { transform: translate(30px,-50px); opacity:.4; }
+      75% { transform: translate(-20px,-150px); opacity:.7; }
+    }
+
+    .glow-text {
+      text-shadow: 0 0 10px var(--primary-blue), 0 0 20px var(--primary-blue);
+    }
+
+    .btn-glow:hover {
+      box-shadow: 0 0 30px var(--primary-blue);
+      transform: scale(1.05);
+    }
+
+    .glass-header {
+      background: rgba(10,22,40,.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,212,255,.1);
+    }
+
+    html { scroll-behavior: smooth; }
+  </style>
  </head>
 
  <body class="h-full font-inter text-white bg-[#0a1628]">
   <div id="app-wrapper" class="w-full h-full overflow-auto">
 
-<!-- HERO CTA -->
-<a
-  id="hero-cta"
-  href="https://wa.me/5571981984004?text=Ol%C3%A1!%20Conheci%20a%20Next%20Lab%20pelo%20site%20e%20gostaria%20de%20conversar%20melhor"
-  target="_blank"
-  rel="noopener noreferrer"
-  class="btn-glow inline-flex items-center px-8 py-4 bg-gradient-to-r from-[#00d4ff] to-[#0077b6] text-white font-bold text-lg rounded-full shadow-lg fade-in delay-3">
-  <span id="hero-cta-text">Contrate nossos serviços</span>
-</a>
+<!-- HERO -->
+<section id="inicio" class="hero-bg min-h-screen flex items-center justify-center pt-20">
+  <div class="grid-overlay"></div>
+
+  <div class="relative z-10 max-w-5xl mx-auto text-center px-6">
+    <h1 class="font-orbitron text-7xl font-black text-[#00d4ff] glow-text mb-6">
+      Next Lab
+    </h1>
+
+    <h2 class="font-orbitron text-2xl text-gray-300 mb-8">
+      Agência de tecnologia para seu negócio
+    </h2>
+
+    <p class="text-gray-400 text-xl max-w-3xl mx-auto mb-10">
+      Nós não criamos apenas sites e agentes de IA — nós criamos sistemas de crescimento.
+    </p>
+
+    <!-- CTA HERO (CORRIGIDO) -->
+    <a
+      id="hero-cta"
+      href="https://wa.me/5571981984004?text=Ol%C3%A1!%20Conheci%20a%20Next%20Lab%20pelo%20site%20e%20gostaria%20de%20conversar%20melhor"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn-glow inline-flex items-center px-8 py-4 bg-gradient-to-r from-[#00d4ff] to-[#0077b6] text-white font-bold text-lg rounded-full shadow-lg">
+      <span id="hero-cta-text">Contrate nossos serviços</span>
+    </a>
+  </div>
+</section>
 
 <!-- CTA FINAL -->
-<a
-  id="cta-final"
-  href="https://wa.me/5571981984004?text=Ol%C3%A1!%20Conheci%20a%20Next%20Lab%20pelo%20site%20e%20gostaria%20de%20conversar%20melhor"
-  target="_blank"
-  rel="noopener noreferrer"
-  class="btn-glow inline-flex items-center px-10 py-5 bg-gradient-to-r from-[#00d4ff] to-[#0077b6] text-white font-bold text-lg rounded-full shadow-lg">
-  <span id="cta-button-text">Fale no WhatsApp</span>
-</a>
+<section id="contato" class="py-32 bg-[#0a1628] text-center">
+  <h2 class="font-orbitron text-4xl mb-6">
+    Pronto para <span class="text-[#00d4ff] glow-text">transformar</span> seu negócio?
+  </h2>
+
+  <p class="text-gray-400 text-xl mb-10">
+    Agende uma conversa gratuita agora mesmo.
+  </p>
+
+  <!-- CTA FINAL (CORRIGIDO) -->
+  <a
+    id="cta-final"
+    href="https://wa.me/5571981984004?text=Ol%C3%A1!%20Conheci%20a%20Next%20Lab%20pelo%20site%20e%20gostaria%20de%20conversar%20melhor"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="btn-glow inline-flex items-center px-10 py-5 bg-gradient-to-r from-[#00d4ff] to-[#0077b6] text-white font-bold text-lg rounded-full shadow-lg">
+    <span id="cta-button-text">Fale no WhatsApp</span>
+  </a>
+</section>
+
+<footer class="py-8 bg-[#070d18] text-center">
+  <p class="text-gray-500 text-sm">
+    © 2026 Next Lab — Todos os direitos reservados
+  </p>
+</footer>
 
   </div>
  </body>
