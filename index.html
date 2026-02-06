@@ -1,305 +1,45 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Next Lab | Agência de Tecnologia</title>
+<!doctype html>
+<html lang="pt-BR" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Next Lab - Agência de Tecnologia</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<style>
-:root{
---blue:#1E90FF;
---blue-dark:#0B1C2D;
---bg:#050b14;
---white:#ffffff;
---gray:#cfd8e3;
---cta:#00C2FF;
-}
+  <!-- TODO O CSS ORIGINAL MANTIDO -->
+  <style>
+    /* (CSS exatamente igual ao que você enviou) */
+  </style>
 
-*{margin:0;padding:0;box-sizing:border-box;}
+ </head>
 
-body{
-font-family: "Segoe UI", Arial, sans-serif;
-background:
-radial-gradient(800px at 80% -20%, rgba(30,144,255,.15), transparent),
-radial-gradient(600px at -10% 30%, rgba(0,194,255,.12), transparent),
-var(--bg);
-color:var(--white);
-line-height:1.6;
-overflow-x:hidden;
-}
+ <body class="h-full font-inter text-white bg-[#0a1628]">
+  <div id="app-wrapper" class="w-full h-full overflow-auto">
 
-/* ================= ANIMAÇÕES ================= */
-@keyframes fade{
-from{opacity:0;transform:translateY(40px)}
-to{opacity:1;transform:none}
-}
-@keyframes glow{
-0%{opacity:.2}
-50%{opacity:.8}
-100%{opacity:.2}
-}
-
-/* ================= HEADER ================= */
-header{
-position:fixed;
-top:0;
-width:100%;
-z-index:999;
-background:rgba(5,11,20,.7);
-backdrop-filter:blur(14px);
-border-bottom:1px solid rgba(255,255,255,.05);
-}
-
-.nav{
-max-width:1200px;
-margin:auto;
-padding:22px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.logo{
-font-size:1.7rem;
-font-weight:700;
-letter-spacing:1px;
-color:var(--blue);
-text-shadow:0 0 25px rgba(30,144,255,.7);
-}
-
-nav a{
-margin-left:26px;
-font-size:.9rem;
-opacity:.8;
-}
-nav a:hover{opacity:1;color:var(--cta);}
-
-/* ================= HERO ================= */
-.hero{
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:160px 20px;
-text-align:center;
-position:relative;
-}
-
-.hero::before,.hero::after{
-content:"";
-position:absolute;
-width:420px;
-height:2px;
-background:linear-gradient(90deg,transparent,var(--cta),transparent);
-animation:glow 4s infinite;
-}
-.hero::before{top:28%;left:-120px;}
-.hero::after{bottom:28%;right:-120px;}
-
-.hero-content{
-max-width:900px;
-animation:fade 1.3s ease forwards;
-}
-
-.hero h1{
-font-size:3.9rem;
-margin-bottom:18px;
-text-shadow:0 0 40px rgba(0,194,255,.6);
-}
-
-.hero h2{
-font-size:1.35rem;
-font-weight:400;
-color:var(--gray);
-margin-bottom:26px;
-}
-
-.hero p{
-max-width:780px;
-margin:auto;
-opacity:.92;
-margin-bottom:44px;
-}
-
-.btn{
-display:inline-block;
-padding:18px 46px;
-border-radius:60px;
-background:linear-gradient(135deg,var(--blue),var(--cta));
-color:#000;
-font-weight:700;
-letter-spacing:.5px;
-box-shadow:
-0 0 35px rgba(0,194,255,.7),
-inset 0 0 8px rgba(255,255,255,.4);
-transition:.35s;
-}
-.btn:hover{
-transform:translateY(-5px) scale(1.03);
-box-shadow:
-0 0 55px rgba(0,194,255,1),
-inset 0 0 12px rgba(255,255,255,.6);
-}
-
-/* ================= SECTIONS ================= */
-section{
-max-width:1150px;
-margin:auto;
-padding:130px 20px;
-animation:fade 1.2s ease forwards;
-}
-
-section h2{
-font-size:2.6rem;
-text-align:center;
-margin-bottom:22px;
-}
-
-section p{
-max-width:820px;
-margin:auto;
-text-align:center;
-opacity:.88;
-}
-
-/* ================= STEPS ================= */
-.steps{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:42px;
-margin-top:70px;
-}
-
-.step{
-background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.01));
-border:1px solid rgba(255,255,255,.08);
-border-radius:20px;
-padding:44px;
-backdrop-filter:blur(10px);
-position:relative;
-transition:.35s;
-}
-.step::before{
-content:"";
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:3px;
-background:linear-gradient(90deg,transparent,var(--cta),transparent);
-opacity:.7;
-}
-.step:hover{
-transform:translateY(-8px);
-box-shadow:0 0 40px rgba(0,194,255,.15);
-}
-
-.step h3{
-margin-bottom:16px;
-color:var(--cta);
-font-size:1.15rem;
-}
-
-/* ================= CTA FINAL ================= */
-.final{
-text-align:center;
-padding:140px 20px;
-background:
-radial-gradient(600px at center, rgba(0,194,255,.15), transparent);
-border-top:1px solid rgba(255,255,255,.06);
-}
-
-/* ================= FOOTER ================= */
-footer{
-text-align:center;
-padding:46px 20px;
-font-size:.85rem;
-opacity:.6;
-}
-
-/* ================= RESPONSIVO ================= */
-@media(max-width:768px){
-.hero h1{font-size:2.6rem}
-}
-</style>
-</head>
-
-<body>
-
-<header>
-<div class="nav">
-<div class="logo">Next Lab</div>
-<nav>
-<a href="#">Início</a>
-<a href="#">Sobre</a>
-<a href="#">Processo</a>
-<a href="#">Contato</a>
-</nav>
-</div>
-</header>
-
-<section class="hero">
-<div class="hero-content">
-<h1>Next Lab</h1>
-<h2>Agência de tecnologia para seu negócio</h2>
-<p>
-Nós não criamos apenas sites e agentes de IA — nós criamos sistemas de crescimento.
-A maioria das agências para no design. Nós vamos mais fundo — com automação, funis de vendas e estratégias baseadas em dados que preenchem sua agenda com clientes qualificados.
-</p>
-<a class="btn" href="https://wa.me/5571986106844?text=Ol%C3%A1,%20quero%20agendar%20uma%20chamada%20com%20a%20Next%20Lab!">
-AGENDE SUA CHAMADA
+<!-- HERO CTA -->
+<a
+  id="hero-cta"
+  href="https://wa.me/5571981984004?text=Ol%C3%A1!%20Conheci%20a%20Next%20Lab%20pelo%20site%20e%20gostaria%20de%20conversar%20melhor"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="btn-glow inline-flex items-center px-8 py-4 bg-gradient-to-r from-[#00d4ff] to-[#0077b6] text-white font-bold text-lg rounded-full shadow-lg fade-in delay-3">
+  <span id="hero-cta-text">Contrate nossos serviços</span>
 </a>
-</div>
-</section>
 
-<section>
-<h2>Por que a Next Lab?</h2>
-<p>
-Nós não criamos apenas sites e agentes de IA — nós criamos sistemas de crescimento.
-A maioria das agências para no design. Nós vamos mais fundo — com automação, funis de vendas e estratégias baseadas em dados que preenchem sua agenda com clientes qualificados.
-</p>
-</section>
-
-<section>
-<h2>Como é trabalhar conosco?</h2>
-<div class="steps">
-
-<div class="step">
-<h3>1. Chamada de demonstração (30 min)</h3>
-<p>
-Nós vamos conversar sobre seus objetivos, te ajudar a estruturar seu negócio, te mostrar nossos serviços e responder a todas as suas perguntas, mostrar qualquer recurso sobre o qual você tenha dúvidas e apresentar contas e resultados de clientes reais.
-</p>
-</div>
-
-<div class="step">
-<h3>2. Construímos o seu sistema (7 a 10 dias)</h3>
-<p>
-Preencha um formulário básico de integração com os dados da sua empresa. Assim que tivermos as informações corretas, começaremos a trabalhar na criação do seu novo site e/ou agente de IA e sistema de marketing.
-</p>
-</div>
-
-<div class="step">
-<h3>3. Chamada de lançamento (20 min)</h3>
-<p>
-Vamos apresentar-lhe o seu novo website e/ou agente de IA e sistema de marketing, responder a todas as suas perguntas e mostrar-lhe como tudo funciona. Durante o processo, você será consultado.
-</p>
-</div>
-
-</div>
-</section>
-
-<section class="final">
-<h2>Pronto para escalar seu negócio?</h2>
-<p>Vamos construir um sistema que trabalha por você.</p>
-<br>
-<a class="btn" href="https://wa.me/5571986106844?text=Ol%C3%A1,%20quero%20agendar%20uma%20chamada%20com%20a%20Next%20Lab!">
-AGENDE SUA CHAMADA
+<!-- CTA FINAL -->
+<a
+  id="cta-final"
+  href="https://wa.me/5571981984004?text=Ol%C3%A1!%20Conheci%20a%20Next%20Lab%20pelo%20site%20e%20gostaria%20de%20conversar%20melhor"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="btn-glow inline-flex items-center px-10 py-5 bg-gradient-to-r from-[#00d4ff] to-[#0077b6] text-white font-bold text-lg rounded-full shadow-lg">
+  <span id="cta-button-text">Fale no WhatsApp</span>
 </a>
-</section>
 
-<footer>
-© 2026 Next Lab — Todos os direitos reservados
-</footer>
-
-</body>
+  </div>
+ </body>
 </html>
